@@ -1,0 +1,1 @@
+GeoChem_Class is a repository of functions and Jupyter notebooks for in-class problem set discussions. The repository will feature a Jupyter notebook for advection/diffusion models and one for simple box models, as well as a .py file with functions necessary to do the work outlined in the Jupyter notebook. 
