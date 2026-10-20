@@ -459,7 +459,8 @@ def visualize_phase1(phase1_arr, z, T_0, time_step, cmap='copper'):
 
     #xes = np.linspace(0, max_depth, max_depth//depth_step)
     cols = [0, len(phase1_arr[:,0])//3, len(phase1_arr[:, 0])//3*2, -1]
-    colormap = cm.get_cmap(cmap, len(cols))
+    #colormap = cm.get_cmap(cmap, len(cols))
+    colors = plt.get_cmap(cmap, len(cols))
     for ind, t in enumerate(cols):
         if t==0:
             name = 'Initial Cond.'
@@ -467,7 +468,7 @@ def visualize_phase1(phase1_arr, z, T_0, time_step, cmap='copper'):
             name = 'Final Cond.'
         else:
             name = str(T_0 - t*time_step)+' ybp'
-        ax.plot(phase1_arr[t, :], z, c=colormap(ind), label=name)
+        ax.plot(phase1_arr[t, :], z, c=colors(ind), label=name)
     
     ax.yaxis.set_inverted(True)
     ax.set(
@@ -506,13 +507,14 @@ def visualize_phase2(phase_2_profiles, pw_df, z, slice=5, cmap='copper'):
 
     Nt = phase_2_profiles.shape[0]
     print('Nt = ', Nt)
-    colormap = cm.get_cmap(cmap, slice+2)
+    #colormap = cm.get_cmap(cmap, slice+2)
+    colors = plt.get_cmap(cmap, slice+2)
     ctr=1
     #Plot Phase 2 only:
     for t in range(0, Nt, Nt//slice):
         # plot every "Nt//slice" time step from model
         print('Time step: ', str(Nt-t))
-        ax[0].plot(phase_2_profiles[t, :], z, c=colormap(ctr), label=f'{Nt-t}'+'ybp')
+        ax[0].plot(phase_2_profiles[t, :], z, c=colors(ctr), label=f'{Nt-t}'+'ybp')
         ctr = ctr + 1
     #Add observations:
     ax[0].plot(cond, depth, linestyle='', marker='^', markersize=10, mec='k', color='tomato')
@@ -566,11 +568,12 @@ def visualize_allphases(c_profiles_p1, phase_2_profiles, pw_df, T_0, T_1, z, sli
     #Plot Phase 1:
     Nt_0 = c_profiles_p1.shape[0]
     #Activate color map, set counter at 1 so that the colormap does not include black. 
-    colormap = cm.get_cmap(cmap, slice+2)
+    #colormap = cm.get_cmap(cmap, slice+2)
+    colors = plt.get_cmap(cmap, slice+2)
     ctr=1
     for t in range(0, Nt_0, Nt_0//slice):
         # plot every "Nt//slice" time step from model
-        ax[0].plot(c_profiles_p1[t, :], z, c=colormap(ctr), label=f'{T_0-t}'+'ybp')
+        ax[0].plot(c_profiles_p1[t, :], z, c=colors(ctr), label=f'{T_0-t}'+'ybp')
         ctr = ctr + 1
     #Add observations:
     ax[0].plot(cond, depth, linestyle='', marker='^', markersize=10, mec='k', color='tomato')
@@ -586,7 +589,7 @@ def visualize_allphases(c_profiles_p1, phase_2_profiles, pw_df, T_0, T_1, z, sli
     ctr = 1     #Reset Counter...
     for t in range(0, Nt_1, Nt_1//slice):
         # plot every "Nt//slice" time step from model
-        ax[1].plot(phase_2_profiles[t, :], z, c=colormap(ctr), label=f'{T_1-t}'+'ybp')
+        ax[1].plot(phase_2_profiles[t, :], z, c=colors(ctr), label=f'{T_1-t}'+'ybp')
         ctr = ctr + 1
     #Add observations:
     ax[1].plot(cond, depth, linestyle='', marker='^', markersize=10, mec='k', color='tomato')
